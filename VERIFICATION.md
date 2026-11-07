@@ -3,5 +3,7 @@
 - 单元测试还在临时工程中实际执行登记脚本，验证成功响应激活、503/非HTML/断网时目录与图标保持原样。单元测试验证目录发布状态、HTTPS Pages URL、重复标识、非法图标路径、搜索与收藏组合。
 - Chrome 桌面浏览器触控模拟：1440×900、1194×834、834×1194、768×1024、390×844、844×390。检查无横向溢出、图标加载、新窗口目标及 opener 隔离、收藏持久化、空状态恢复、横竖屏和减少动态效果。
 - 故障测试：拦截目录注入准备中条目，确认卡片真实存在且没有超链接；目录请求失败并重试成功、浏览器拒绝 localStorage 时会话收藏仍可用。详细结果由 npm run test:browser 写入忽略的 work/qa/。
-- DESIGN.md 结构校验：0 errors；静态 Premium 审查的 canonical map 已补齐，仍报告5个 actionless-button。逐项检查可确认这些按钮在 public/app.js 通过 addEventListener 绑定；该审查器只识别 HTML 中的 onclick/@click，不识别外部事件绑定。对应导航、搜索清除、空状态恢复与失败重试均经浏览器实际点击验证。保留 premium-audit.json 原始结果，不将严格静态审查描述为通过。
+- DESIGN.md 结构校验：0 errors；静态 Premium 审查的 canonical map 已补齐，仍报告6个 actionless-button。逐项检查可确认这些按钮在 public/app.js 通过 addEventListener 绑定；该审查器只识别 HTML 中的 onclick/@click，不识别外部事件绑定。对应导航、整页刷新、搜索清除、空状态恢复与失败重试均经浏览器实际点击验证。保留 premium-audit.json 原始结果，不将严格静态审查描述为通过。
 - 未使用实体 iPad、Safari 或主屏幕安装模式；桌面 Chrome 触控模拟不代表真机验证，也未宣称完整无障碍认证或真实低性能设备测试。
+
+整页刷新验收：6组视口点击右上角按钮后均重建文档（原页面内存标记消失），收藏仍存在；目录请求测试在刷新后返回新增项目，并验证新条目显示。构建输出的样式、脚本、图标使用内容版本地址，目录请求使用独立参数与 no-store。桌面浏览器模拟，不代表实体 iPad 验证。

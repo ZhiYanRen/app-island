@@ -21,6 +21,15 @@
     {
       "category": "violation",
       "file": "public/index.html",
+      "line": 7,
+      "message": "Enabled literal button has no detectable action or submit behavior.",
+      "remediation": "Connect the button to a real action, make it a submit button, or disable/remove it.",
+      "ruleId": "affordance.actionless-button",
+      "severity": "error"
+    },
+    {
+      "category": "violation",
+      "file": "public/index.html",
       "line": 9,
       "message": "Enabled literal button has no detectable action or submit behavior.",
       "remediation": "Connect the button to a real action, make it a submit button, or disable/remove it.",
@@ -50,10 +59,10 @@
   "projectRoot": "/Users/yanren/Documents/github/app-island",
   "schemaVersion": 1,
   "summary": {
-    "errors": 5,
-    "total": 5,
+    "errors": 6,
+    "total": 6,
     "unresolved": 0,
-    "violations": 5,
+    "violations": 6,
     "warnings": 0
   }
 }

@@ -1,6 +1,7 @@
 import {validateCatalog,selectProjects} from './catalog.js';
 const $=s=>document.querySelector(s);
 const storageKey='app-island-favorites-v1';
+const assetVersion=new URL(import.meta.url).searchParams.get('v');
 let projects=[],favorites=[],view='all',storageAvailable=true;
 try {const saved=JSON.parse(localStorage.getItem(storageKey)||'[]');if(Array.isArray(saved)) favorites=saved.filter(x=>typeof x==='string');} catch {storageAvailable=false;}
 const star='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.3.9-4.5 4.4 1 6.2-5.6-3-5.6 3 1-6.2L3 9.6l6.2-.9Z"/></svg>';
@@ -19,7 +20,7 @@ function render(){
   const link=document.createElement(p.status==='published'?'a':'div');link.className='app-link';
   if(p.status==='published'){link.href=p.url;link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label',`打开${p.name}（新窗口）`);} else {link.setAttribute('aria-disabled','true');}
   const top=document.createElement('div');top.className='card-top';
-  const icon=document.createElement('img');icon.src=p.icon;icon.alt='';icon.width=80;icon.height=80;icon.className='project-icon';
+  const icon=document.createElement('img');const iconUrl=new URL(p.icon,import.meta.url);if(assetVersion)iconUrl.searchParams.set('v',assetVersion);icon.src=iconUrl.href;icon.alt='';icon.width=80;icon.height=80;icon.className='project-icon';
   icon.addEventListener('error',()=>{icon.hidden=true;const fallback=document.createElement('span');fallback.className='icon-fallback';fallback.textContent=p.name.slice(0,1);top.prepend(fallback);},{once:true});
   const tag=document.createElement('span');tag.className='category-tag';tag.textContent=p.category;top.append(icon,tag);
   const name=document.createElement('h3');name.textContent=p.name;
@@ -39,7 +40,7 @@ function render(){
 }
 async function load(){
  $('#error').hidden=true;$('#empty').hidden=true;$('#grid').setAttribute('aria-busy','true');$('#grid').textContent='正在载入你的应用…';
- try {const response=await fetch(new URL('./projects.json',import.meta.url),{cache:'no-cache'});if(!response.ok)throw Error('目录加载失败');projects=validateCatalog(await response.json());render();}
+ try {const catalogUrl=new URL('./projects.json',import.meta.url);catalogUrl.searchParams.set('_refresh',String(Date.now()));const response=await fetch(catalogUrl,{cache:'no-store'});if(!response.ok)throw Error('目录加载失败');projects=validateCatalog(await response.json());render();}
  catch {$('#grid').replaceChildren();$('#grid').setAttribute('aria-busy','false');$('#error').hidden=false;$('#result-count').textContent='暂未载入';}
 }
 for(const button of document.querySelectorAll('[data-view]'))button.addEventListener('click',()=>{
@@ -52,5 +53,9 @@ $('#search').addEventListener('input',()=>{if($('#error').hidden)render();});
 $('#clear-search').addEventListener('click',()=>{$('#search').value='';$('#search').focus();render();});
 $('#empty-reset').addEventListener('click',()=>{$('#search').value='';$('[data-view="all"]').click();$('#search').focus();});
 $('#retry').addEventListener('click',load);
+$('#refresh-page').addEventListener('click',()=>{
+ const button=$('#refresh-page');button.disabled=true;button.setAttribute('aria-busy','true');button.querySelector('span').textContent='正在刷新';
+ const url=new URL(window.location.href);url.searchParams.set('_refresh',String(Date.now()));window.location.replace(url.href);
+});
 document.addEventListener('keydown',event=>{if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==='k'){event.preventDefault();$('#search').focus();}});
 load();

@@ -20,7 +20,13 @@ try {
   await page.locator('#search').fill('不存在的应用');assert(await page.locator('#empty').isVisible());
   await page.getByRole('button',{name:'清除搜索'}).click();assert.equal(await page.locator('.app-card').count(),expectedCount);
   await page.getByRole('button',{name:'收藏拼音小花园',exact:true}).click();assert.equal(await page.getByRole('button',{name:'取消收藏拼音小花园',exact:true}).getAttribute('aria-pressed'),'true');
-  await page.reload();await page.locator('.app-card').first().waitFor();assert(await page.getByRole('button',{name:'取消收藏拼音小花园',exact:true}).isVisible());
+  assert(new URL(await page.locator('link[rel=stylesheet]').getAttribute('href'),page.url()).searchParams.has('v'),'built styles are versioned');
+  const refresh=page.getByRole('button',{name:'刷新页面',exact:true});assert.equal(await refresh.count(),1,'page refresh button exists');
+  const refreshBox=await refresh.boundingBox();assert(refreshBox.width>=44&&refreshBox.height>=44,'refresh touch target');
+  await page.evaluate(()=>{window.beforePageRefresh=true;});
+  await Promise.all([page.waitForURL(url=>url.searchParams.has('_refresh')),refresh.click()]);await page.locator('.app-card').first().waitFor();
+  assert.equal(await page.evaluate(()=>window.beforePageRefresh),undefined,'refresh creates a new page, not just a new list');
+  assert(await page.getByRole('button',{name:'取消收藏拼音小花园',exact:true}).isVisible(),'refresh preserves stored favorites');
   await page.locator('[data-view="favorites"]').click();assert.equal(await page.locator('.app-card').count(),1);
   await page.getByRole('button',{name:'取消收藏拼音小花园',exact:true}).click();assert(await page.locator('#empty').isVisible());
   await page.locator('#empty-reset').click();await page.keyboard.press('Tab');
@@ -30,16 +36,18 @@ try {
   const touch=await page.locator('.favorite-button').first().boundingBox();assert(touch.width>=44&&touch.height>=44);
   for(const pending of await page.locator('.app-link[aria-disabled="true"]').all())assert.equal(await pending.getAttribute('href'),null,'pending has no URL');
   await page.screenshot({path:`work/qa/home-${width}.png`,fullPage:true});assert.deepEqual(errors,[]);
-  reports.push({width,height,checks:['new-window destination','opener isolation','search clear and empty','favorite persistence','empty recovery','touch target','rotation','reduced motion','logo loading']});await context.close();
+  reports.push({width,height,checks:['new-window destination','opener isolation','search clear and empty','favorite persistence','full-page forced refresh','new catalog after refresh','empty recovery','touch target','rotation','reduced motion','logo loading']});await context.close();
  }
  const pendingContext=await browser.newContext(),pendingPage=await pendingContext.newPage();
  const pendingFixture=JSON.parse(await readFile(new URL('../public/projects.json',import.meta.url),'utf8'));
  pendingFixture.push({id:'unpublished-fixture',name:'尚未发布的项目',description:'等待正式发布',category:'工具',icon:'./assets/logo.svg',status:'pending',url:null});
- await pendingPage.route('**/projects.json',route=>route.fulfill({json:pendingFixture}));await pendingPage.goto(base);
+ let pendingLoads=0;
+ await pendingPage.route('**/projects.json*',route=>route.fulfill({json:pendingLoads++?pendingFixture:pendingFixture.filter(p=>p.id!=='unpublished-fixture')}));await pendingPage.goto(base);await pendingPage.locator('.app-card').first().waitFor();
+ await Promise.all([pendingPage.waitForURL(url=>url.searchParams.has('_refresh')),pendingPage.getByRole('button',{name:'刷新页面',exact:true}).click()]);
  const pendingCard=pendingPage.locator('[data-project="unpublished-fixture"]');await pendingCard.waitFor();
  assert.equal(await pendingCard.locator('a').count(),0,'pending card must not contain a link');assert.equal(await pendingCard.locator('[aria-disabled="true"]').count(),1);assert(await pendingCard.getByText('准备中',{exact:true}).isVisible());await pendingContext.close();
  const context=await browser.newContext(),page=await context.newPage();let fail=true;
- await page.route('**/projects.json',route=>fail?route.abort():route.continue());
+ await page.route('**/projects.json*',route=>fail?route.abort():route.continue());
  await page.goto(base);assert(await page.locator('#error').isVisible());fail=false;await page.locator('#retry').click();await page.locator('.app-card').first().waitFor();assert.equal(await page.locator('#error').isVisible(),false);
  await context.close();
  const blocked=await browser.newContext();await blocked.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw new DOMException('blocked','SecurityError');}}));

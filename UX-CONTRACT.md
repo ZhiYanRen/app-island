@@ -17,3 +17,5 @@
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |
 | --- | --- | --- | --- | --- |
 | Scrollbar | public/styles.css global baseline | DESIGN.md + CSS tokens | thumb, track, hover, active, forced-colors | tests/browser.mjs |
+
+整页刷新由 public/app.js 的 refresh-page 事件拥有：通过当前地址的 _refresh 参数生成新页面请求，用 location.replace 避免堆积历史记录，保留其他参数和页面路径。不是只重新请求目录；完整重建文档，保留 localStorage 收藏。构建通过内容版本更新静态资源 URL，目录每次请求使用独立参数及 no-store。
