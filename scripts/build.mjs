@@ -1,0 +1,11 @@
+import {cp,mkdir,readFile,writeFile,rm,access} from 'node:fs/promises';
+import path from 'node:path';
+import sharp from 'sharp';
+import {validateCatalog} from '../public/catalog.js';
+const root=new URL('../',import.meta.url);
+const projects=validateCatalog(JSON.parse(await readFile(new URL('public/projects.json',root),'utf8')));
+for(const project of projects) await access(new URL(`public/${project.icon.slice(2)}`,root));
+const dist=new URL('dist/',root);await rm(dist,{recursive:true,force:true});await mkdir(dist,{recursive:true});await cp(new URL('public/',root),dist,{recursive:true});
+for(const [name,size] of [['icon-192.png',192],['icon-512.png',512],['apple-touch-icon.png',180]]) await sharp(new URL('public/assets/logo.svg',root).pathname).resize(size,size).png().toFile(new URL(`assets/${name}`,dist).pathname);
+await writeFile(new URL('.nojekyll',dist),'');
+console.log(`Built ${projects.length} projects into ${path.basename(dist.pathname.slice(0,-1))}/`);

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "pinyin-garden",
+    "name": "拼音小花园",
+    "description": "听一听，写一写。让每一次拼音练习，都有小小收获。",
+    "category": "学习成长",
+    "icon": "./assets/projects/pinyin-garden.svg",
+    "status": "published",
+    "url": "https://zhiyanren.github.io/pinyin-garden-pages/"
+  },
+  {
+    "id": "app-island",
+    "name": "应用岛",
+    "description": "一个入口，收藏所有小世界。你的专属应用导航。",
+    "category": "效率工具",
+    "icon": "./assets/logo.svg",
+    "status": "pending",
+    "url": null
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "profile": "product-admin",
+  "sourceRoots": [
+    "public"
+  ],
+  "locale": "zh-CN",
+  "canonicalMap": "UX-CONTRACT.md",
+  "requiredCapabilities": [
+    "Scrollbar"
+  ],
+  "requiredCommands": [
+    "unit",
+    "browser"
+  ],
+  "commands": {
+    "unit": "npm test",
+    "browser": "npm run test:browser"
+  },
+  "evidence": {
+    "failurePaths": "tests/browser.mjs"
+  }
+}
