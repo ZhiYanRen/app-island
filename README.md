@@ -4,7 +4,7 @@ iPad 优先的 App 风格导航，用各项目真实 Logo、名称和简介连�
 
 公开源码与发布配置：https://github.com/ZhiYanRen/app-island
 
-正式网站：首次 Pages 发布成功后回填。
+正式网站：https://zhiyanren.github.io/app-island/ 。
 
 ## 本机运行
 
