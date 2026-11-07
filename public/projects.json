@@ -7,14 +7,5 @@
     "icon": "./assets/projects/pinyin-garden.svg",
     "status": "published",
     "url": "https://zhiyanren.github.io/pinyin-garden-pages/"
-  },
-  {
-    "id": "app-island",
-    "name": "应用岛",
-    "description": "一个入口，收藏所有小世界。你的专属应用导航。",
-    "category": "效率工具",
-    "icon": "./assets/logo.svg",
-    "status": "published",
-    "url": "https://zhiyanren.github.io/app-island/"
   }
 ]

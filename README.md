@@ -1,6 +1,6 @@
 # 应用岛
 
-iPad 优先的 App 风格导航，用各项目真实 Logo、名称和简介连接工作区全部网站。支持搜索、收藏及新窗口打开，兼容手机和 PC。
+iPad 优先的 App 风格导航，用各项目真实 Logo、名称和简介连接工作区其他网站。支持搜索、收藏及新窗口打开，兼容手机和 PC。
 
 公开源码与发布配置：https://github.com/ZhiYanRen/app-island
 
@@ -41,3 +41,5 @@ npm run build
 单公开仓库保存源码和配置。main push 自动 npm ci、npm test、npm run build，上传 dist/ 并通过 GitHub Actions 发布 Pages。Pages 来源为 GitHub Actions，不需要跨仓库密钥。PR 只验证，workflow_dispatch 支持手动重试。
 
 开发规范见 AGENTS.md，设计见 DESIGN.md 与 UX-CONTRACT.md。应用岛 Logo 为本项目原创，拼音小花园图标取自其原始资源，无外部图标服务依赖。
+
+应用岛仅列出其他项目，不展示自己的应用入口；目录校验和登记脚本会拒绝 app-island 自身条目。

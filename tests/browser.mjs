@@ -11,6 +11,7 @@ try {
   page.on('pageerror',error=>errors.push(error.message));
   await page.goto(base);await page.locator('.app-card').first().waitFor();
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`overflow ${width}×${height}`);
+  await page.waitForFunction(()=>[...document.images].every(image=>image.complete&&image.naturalWidth>0));
   for(const img of await page.locator('img').all())assert(await img.evaluate(el=>el.complete&&el.naturalWidth>0),'image loads');
   const link=page.getByRole('link',{name:'打开拼音小花园（新窗口）'});assert.equal(await link.getAttribute('target'),'_blank');assert.match(await link.getAttribute('rel'),/noopener/);
   await context.route('https://zhiyanren.github.io/pinyin-garden-pages/',route=>route.fulfill({contentType:'text/html',body:'<title>目标应用</title>'}));

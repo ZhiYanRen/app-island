@@ -22,3 +22,6 @@ test('search and favorites compose without changing the catalog',()=>{
  assert.deepEqual(selectProjects(input,{query:'拼音',favoritesOnly:true,favorites:['island']}),[]);
  assert.equal(input.length,2);
 });
+test('the navigation catalog never includes App Island itself',()=>{
+ assert.throws(()=>validateCatalog([{...item,id:'app-island',name:'应用岛'}]),/自身/);
+});

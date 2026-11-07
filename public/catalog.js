@@ -3,6 +3,7 @@ export function validateCatalog(projects) {
  const ids=new Set();
  for (const p of projects) {
   if (!p || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(p.id) || ids.has(p.id)) throw new Error('项目标识缺失或重复');
+  if(p.id==='app-island') throw new Error('导航目录不收录应用岛自身');
   ids.add(p.id);
   for (const key of ['name','description','category']) if (typeof p[key]!=='string'||!p[key].trim()) throw new Error(`项目缺少 ${key}`);
   if (!/^\.\/assets\/[a-zA-Z0-9/_-]+\.(svg|png|webp)$/.test(p.icon)) throw new Error('图标必须是本站静态资源');
