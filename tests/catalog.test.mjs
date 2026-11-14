@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {validateCatalog, selectProjects} from '../public/catalog.js';
-const item = {id:'garden',name:'拼音小花园',description:'听写与复习',category:'学习',icon:'./assets/projects/garden.svg',status:'published',url:'https://zhiyanren.github.io/pinyin-garden-pages/'};
+const item = {id:'garden',name:'锦铭语文小助手',description:'听写与复习',category:'学习',icon:'./assets/projects/garden.svg',status:'published',url:'https://zhiyanren.github.io/pinyin-garden-pages/'};
 test('published entries require an actual HTTPS Pages URL',()=>{
  assert.deepEqual(validateCatalog([item]),[item]);
  for(const url of [null,'javascript:alert(1)','http://zhiyanren.github.io/demo/','https://example.com/','https://user@zhiyanren.github.io/demo/','https://zhiyanren.github.io/demo/?secret=x']) assert.throws(()=>validateCatalog([{...item,url}]));

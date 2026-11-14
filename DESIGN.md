@@ -59,7 +59,7 @@ public/styles.css :root 是运行时 token 唯一来源，本文件镜像已接�
 - 全局 scrollbar 在 styles.css，具备 thumb/track/hover/active/forced-colors；焦点3px，状态同时有文字与颜色。
 - CSS 入场420ms、操作反馈160—220ms、第二项延迟70ms；按压缩放与收藏高亮。减少动态效果时关闭动画和过渡。无复杂控制，不引入 GSAP。
 - 目录失败显示重试，空列表提供恢复，搜索与导航不因加载移动。右上角“刷新页面”替换装饰性状态标记，触控区域至少44px，刷新时禁用并显示“正在刷新”与旋转图标，减少动态效果时停止旋转。整页重新导航而非局部更新；收藏保留，搜索和当前页面内状态重置。
-- Logo 原稿 public/assets/logo.svg 为本项目原创，构建生成180/192/512 PNG。拼音小花园图标来自其 dist/icon.svg，保持原始图形和配色。
+- Logo 原稿 public/assets/logo.svg 为本项目原创，构建生成180/192/512 PNG。锦铭语文小助手图标来自其 dist/icon.svg，保持原始图形和配色。
 
 ## Do's and Don'ts
 

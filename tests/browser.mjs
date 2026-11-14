@@ -13,22 +13,22 @@ try {
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`overflow ${width}×${height}`);
   await page.waitForFunction(()=>[...document.images].every(image=>image.complete&&image.naturalWidth>0));
   for(const img of await page.locator('img').all())assert(await img.evaluate(el=>el.complete&&el.naturalWidth>0),'image loads');
-  const link=page.getByRole('link',{name:'打开拼音小花园（新窗口）'});assert.equal(await link.getAttribute('target'),'_blank');assert.match(await link.getAttribute('rel'),/noopener/);
+  const link=page.getByRole('link',{name:'打开锦铭语文小助手（新窗口）'});assert.equal(await link.getAttribute('target'),'_blank');assert.match(await link.getAttribute('rel'),/noopener/);
   await context.route('https://zhiyanren.github.io/pinyin-garden-pages/',route=>route.fulfill({contentType:'text/html',body:'<title>目标应用</title>'}));
   const popupPromise=page.waitForEvent('popup');await link.click();const popup=await popupPromise;await popup.waitForLoadState();
   assert.equal(popup.url(),'https://zhiyanren.github.io/pinyin-garden-pages/');assert.equal(await popup.evaluate(()=>window.opener),null);await popup.close();
   await page.locator('#search').fill('不存在的应用');assert(await page.locator('#empty').isVisible());
   await page.getByRole('button',{name:'清除搜索'}).click();assert.equal(await page.locator('.app-card').count(),expectedCount);
-  await page.getByRole('button',{name:'收藏拼音小花园',exact:true}).click();assert.equal(await page.getByRole('button',{name:'取消收藏拼音小花园',exact:true}).getAttribute('aria-pressed'),'true');
+  await page.getByRole('button',{name:'收藏锦铭语文小助手',exact:true}).click();assert.equal(await page.getByRole('button',{name:'取消收藏锦铭语文小助手',exact:true}).getAttribute('aria-pressed'),'true');
   assert(new URL(await page.locator('link[rel=stylesheet]').getAttribute('href'),page.url()).searchParams.has('v'),'built styles are versioned');
   const refresh=page.getByRole('button',{name:'刷新页面',exact:true});assert.equal(await refresh.count(),1,'page refresh button exists');
   const refreshBox=await refresh.boundingBox();assert(refreshBox.width>=44&&refreshBox.height>=44,'refresh touch target');
   await page.evaluate(()=>{window.beforePageRefresh=true;});
   await Promise.all([page.waitForURL(url=>url.searchParams.has('_refresh')),refresh.click()]);await page.locator('.app-card').first().waitFor();
   assert.equal(await page.evaluate(()=>window.beforePageRefresh),undefined,'refresh creates a new page, not just a new list');
-  assert(await page.getByRole('button',{name:'取消收藏拼音小花园',exact:true}).isVisible(),'refresh preserves stored favorites');
+  assert(await page.getByRole('button',{name:'取消收藏锦铭语文小助手',exact:true}).isVisible(),'refresh preserves stored favorites');
   await page.locator('[data-view="favorites"]').click();assert.equal(await page.locator('.app-card').count(),1);
-  await page.getByRole('button',{name:'取消收藏拼音小花园',exact:true}).click();assert(await page.locator('#empty').isVisible());
+  await page.getByRole('button',{name:'取消收藏锦铭语文小助手',exact:true}).click();assert(await page.locator('#empty').isVisible());
   await page.locator('#empty-reset').click();await page.keyboard.press('Tab');
   await page.setViewportSize({width:height,height:width});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'rotation no overflow');
   await page.setViewportSize({width,height});
@@ -51,6 +51,6 @@ try {
  await page.goto(base);assert(await page.locator('#error').isVisible());fail=false;await page.locator('#retry').click();await page.locator('.app-card').first().waitFor();assert.equal(await page.locator('#error').isVisible(),false);
  await context.close();
  const blocked=await browser.newContext();await blocked.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw new DOMException('blocked','SecurityError');}}));
- const restricted=await blocked.newPage();await restricted.goto(base);await restricted.locator('.app-card').first().waitFor();await restricted.getByRole('button',{name:'收藏拼音小花园',exact:true}).click();assert(await restricted.locator('#notice').isVisible());assert.equal(await restricted.getByRole('button',{name:'取消收藏拼音小花园',exact:true}).getAttribute('aria-pressed'),'true');await blocked.close();
+ const restricted=await blocked.newPage();await restricted.goto(base);await restricted.locator('.app-card').first().waitFor();await restricted.getByRole('button',{name:'收藏锦铭语文小助手',exact:true}).click();assert(await restricted.locator('#notice').isVisible());assert.equal(await restricted.getByRole('button',{name:'取消收藏锦铭语文小助手',exact:true}).getAttribute('aria-pressed'),'true');await blocked.close();
  await writeFile('work/qa/report.json',JSON.stringify({physicalDevice:false,browser:'Chrome with touch emulation',reports,failureChecks:['pending card not clickable','catalog retry','localStorage denied']},null,2)+'\n');console.log(`PASS ${reports.length} viewports, popup and failure paths`);
 } finally {await browser.close();}

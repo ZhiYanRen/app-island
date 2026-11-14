@@ -1,8 +1,8 @@
 [
   {
     "id": "pinyin-garden",
-    "name": "拼音小花园",
-    "description": "听一听，写一写。让每一次拼音练习，都有小小收获。",
+    "name": "锦铭语文小助手",
+    "description": "拼音巩固、教材听写与语文积累，陪伴每一天的语文学习。",
     "category": "学习成长",
     "icon": "./assets/projects/pinyin-garden.svg",
     "status": "published",
