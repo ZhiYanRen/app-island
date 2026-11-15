@@ -43,5 +43,14 @@
     "status": "published",
     "url": "https://zhiyanren.github.io/dawn-dusk/",
     "icon": "./assets/projects/dawn-dusk.svg"
+  },
+  {
+    "id": "little-english",
+    "name": "英语小星球",
+    "description": "剑桥国际少儿英语第二版第2级，12单元官方资源、本机词句与音频学习。",
+    "category": "学习成长",
+    "status": "published",
+    "url": "https://zhiyanren.github.io/little-english/",
+    "icon": "./assets/projects/little-english.svg"
   }
 ]
