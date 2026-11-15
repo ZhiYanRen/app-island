@@ -67,3 +67,5 @@ public/styles.css :root 是运行时 token 唯一来源，本文件镜像已接�
 - 用轻动效提升品质，不用持续循环动画干扰导航。
 - 不放宣传 Hero、冗长页脚、假统计或未发布的可点击地址。
 - 公开单仓库、main 与 Pages 静态边界优先于技能默认建议。
+
+单词小屋目录图标 public/assets/projects/word-house.svg 复制自 word-house/public/assets/logo.svg，保持绿色小屋与单词本的品牌原图。

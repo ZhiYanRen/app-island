@@ -7,5 +7,14 @@
     "icon": "./assets/projects/pinyin-garden.svg",
     "status": "published",
     "url": "https://zhiyanren.github.io/pinyin-garden-pages/"
+  },
+  {
+    "id": "word-house",
+    "name": "单词小屋",
+    "description": "127个课本单词与短语，支持认读、英语听写、中文默写和错词复习。",
+    "category": "学习成长",
+    "status": "published",
+    "url": "https://zhiyanren.github.io/word-house/",
+    "icon": "./assets/projects/word-house.svg"
   }
 ]
