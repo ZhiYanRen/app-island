@@ -34,5 +34,14 @@
     "status": "published",
     "url": "https://zhiyanren.github.io/meal-journal/",
     "icon": "./assets/projects/meal-journal.svg"
+  },
+  {
+    "id": "dawn-dusk",
+    "name": "朝夕打卡",
+    "description": "早晨设定目标，晚上记录回顾，用日历留住每天的小小坚持。",
+    "category": "生活记录",
+    "status": "published",
+    "url": "https://zhiyanren.github.io/dawn-dusk/",
+    "icon": "./assets/projects/dawn-dusk.svg"
   }
 ]
