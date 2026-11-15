@@ -9,6 +9,15 @@
     "url": "https://zhiyanren.github.io/pinyin-garden-pages/"
   },
   {
+    "id": "jingchan-yuwen-assistant",
+    "name": "静婵语文小助手",
+    "description": "六年级课文听写、语文积累与错题复习，自动保存学习进度。",
+    "category": "学习成长",
+    "status": "published",
+    "url": "https://zhiyanren.github.io/jingchan-yuwen-assistant/",
+    "icon": "./assets/projects/jingchan-yuwen-assistant.svg"
+  },
+  {
     "id": "word-house",
     "name": "单词小屋",
     "description": "127个课本单词与短语，支持认读、英语听写、中文默写和错词复习。",
